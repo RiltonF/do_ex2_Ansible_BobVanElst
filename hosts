@@ -1,5 +1,5 @@
 [www1]
-192.168.2.2
+192.168.2.3
 
 [www2]
 192.168.2.4
@@ -8,12 +8,16 @@
 www1
 www2
 
+[rp]
+192.168.2.5
+
 [mgr]
-localhost
+192.168.2.6
 
 [all:children]
 webservers
 mgr
+rp
 
 [all:vars]
 ansible_connection=ssh 
