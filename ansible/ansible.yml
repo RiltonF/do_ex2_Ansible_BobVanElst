@@ -6,5 +6,7 @@
         apt: name={{ item }} state=present update_cache=yes
         with_items:
             - ansible
+      - name: Generating RSA key for mgr
+        user: name=mgr generate_ssh_key=yes ssh_key_bits=2048 ssh_key_file=.ssh/id_rsa
 
 

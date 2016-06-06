@@ -37,7 +37,7 @@ Vagrant.configure(2) do |config|
 #        mgr.vm.provision  "shell", path: "ansible.sh"
   	mgr.vm.provision :ansible do |ansible|
 	    ansible.limit = "all"
-	    ansible.playbook = "ansible.yml"
+	    ansible.playbook = "ansible/playbook.yml"
 	end
     end
 
