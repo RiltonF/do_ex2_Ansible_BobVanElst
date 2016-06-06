@@ -1,6 +1,7 @@
 Vagrant.configure(2) do |config|
     config.vm.box = "ubuntu/trusty64"
     config.ssh.insert_key = false
+#    config.vm.synced_folder ".", "/vagrant", disabled: true
     config.vm.provider "virtualbox" do |v|
         v.memory = 384
         v.cpus = 2
@@ -43,6 +44,7 @@ Vagrant.configure(2) do |config|
     N = 2  #TODO: Autogenerate Host/Inventory file for Ansible
     (1..N).each do |machine_id|
         config.vm.define "www#{machine_id}" do |machine|
+	    machine.vm.synced_folder ".", "/vagrant", disabled: true
             machine.vm.hostname = "www#{machine_id}"
             machine.vm.network "private_network", ip: "192.168.2.#{10+machine_id}"
             machine.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", disabled: true
