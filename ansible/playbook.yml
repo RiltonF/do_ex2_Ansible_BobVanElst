@@ -1,9 +1,14 @@
 ---
-- hosts: all
-  become: yes
+- hosts: mgr
+  become: no
   tasks:
-      - name: Generating RSA key for mgr
-        user: name=root generate_ssh_key=yes ssh_key_bits=2048
+#      - name: Generating RSA key for mgr
+#        command: ssh-keygen -t rsa -N '' -f /home/$USER/.ssh/id_rsa  creates=/home/$USER/.ssh/id_rsa
+#        args:
+#             executable: /bin/bash 
+
+       - user: user=vagrant generate_ssh_key=yes ssh_key_bits=2048 ssh_key_file=.ssh/id_rsa
+
 
 - hosts: mgr
   become: yes
@@ -12,5 +17,8 @@
         apt: name={{ item }} state=present update_cache=yes
         with_items:
             - ansible
-      - name: copy necessary items
+       #TODO: make following script idempotent!
+      - name: copy hosts to /etc/hosts
         script: ansible.sh
+      - name: copy ansible inventory/playbook to home dir
+        copy: src=.. dest=/home/vagrant/ owner=vagrant group=vagrant mode=0644

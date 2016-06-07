@@ -4,7 +4,7 @@ S-specific
 # Editor swapfiles
 .*.sw?
 *~
-
+/ansible/*.retry
 # Vagrant stuff
 acceptance_config.yml
 boxes/*

@@ -20,8 +20,8 @@
 # files, ssh-agent needs to be implemented as wel.
 
 
-cp -a /vagrant/ansible/* /home/vagrant
-chown -R vagrant:vagrant /home/vagrant
+#cp -a /vagrant/ansible/* /home/vagrant
+#chown -R vagrant:vagrant /home/vagrant
 
 # configure hosts file for our internal network defined by Vagrantfile
 cat >> /etc/hosts <<EOL
