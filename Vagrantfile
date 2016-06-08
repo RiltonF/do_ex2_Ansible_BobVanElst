@@ -35,11 +35,11 @@ Vagrant.configure("2") do |config|
             ansible.playbook = "ansible/ssh-addkey.yml"
 #            ansible.verbose = "vvv"
           end
-          node.vm.provision :ansible do |ansible|
-            ansible.limit = "all"
-            ansible.playbook = "ansible/role-site.yml"
+#          node.vm.provision :ansible do |ansible|
+#            ansible.limit = "all"
+#            ansible.playbook = "ansible/role-site.yml"
 #            ansible.verbose = "vvv"
-          end
+#          end
 #          node.vm.provision :ansible do |ansible|
 #            ansible.limit = "all"
 #            ansible.playbook = "ansible/role-rolling-release.yml"
