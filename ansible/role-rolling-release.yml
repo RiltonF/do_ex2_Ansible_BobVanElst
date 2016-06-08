@@ -1,0 +1,60 @@
+---
+
+# common
+- hosts: all
+  become: yes
+  gather_facts: no
+  remote_user: vagrant
+
+  roles:
+    - common
+
+# web
+- hosts: web
+  become: yes
+  remote_user: vagrant
+
+  vars:
+    app_version: release-0.03
+    git_url: https://github.com/jweissig/episode-47.git
+
+  serial: 1
+
+  pre_tasks:
+  - name: disable server in haproxy
+    shell: echo "disable server WebServers/{{ inventory_hostname }}" | socat stdio /var/lib/haproxy/stats
+    delegate_to: "{{ item }}"
+    with_items: groups.lb
+
+  roles:
+    - web
+
+  tasks:
+  - name: clean existing website content
+    file: path=/usr/share/nginx/html/ state=absent
+
+  - name: deploy website content
+    git: repo={{ git_url }}
+         dest=/usr/share/nginx/html/
+         version={{ app_version }}
+
+  handlers:
+
+  - name: restart nginx
+    action: service name=nginx state=restarted
+
+  post_tasks:
+
+  - name: enable server in haproxy
+    shell: echo "enable server WebServers/{{ inventory_hostname }}" | socat stdio /var/lib/haproxy/stats
+    delegate_to: "{{ item }}"
+    with_items: groups.lb
+
+
+# lb
+- hosts: lb
+  become: yes  
+  remote_user: vagrant
+
+  roles:
+    - lb

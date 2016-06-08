@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: no
+  remote_user: vagrant
+
+  tasks:
+#  - set_fact:
+#      my_ssh_key: "{{ lookup('env','HOME') }}/.ssh/id_rsa.pub"
+#  - authorized_key: user=vagrant key= "{{ lookup( 'file', my_ssh_key ) }}"
+#    sudo: yes
+  - name: install ssh key
+    authorized_key: user=vagrant 
+                    key="{{ lookup('file', '/home/bob/.ssh/id_rsa.pub') }}" 
+                    state=present

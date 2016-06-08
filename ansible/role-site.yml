@@ -1,0 +1,26 @@
+---
+
+# common
+- hosts: all
+  sudo: yes
+  gather_facts: no
+  remote_user: vagrant
+
+  roles:
+    - common
+
+# web
+- hosts: web
+  sudo: yes
+  remote_user: vagrant
+
+  roles:
+    - web
+
+# lb
+- hosts: lb
+  sudo: yes  
+  remote_user: vagrant
+
+  roles:
+    - lb
